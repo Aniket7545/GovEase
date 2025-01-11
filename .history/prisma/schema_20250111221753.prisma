@@ -1,0 +1,79 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique
+  password      String
+  name          String
+  dateOfBirth   DateTime?
+  gender        String?
+  address       String?
+  aadhaarNumber String?   @unique
+  panNumber     String?   @unique
+  documents     Document[]
+  applications  SchemeApplication[]
+  chatHistory   ChatMessage[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Document {
+  id            Int      @id @default(autoincrement())
+  type          String   // e.g., "aadhaar", "pan", "income_certificate"
+  fileUrl       String
+  status        String   // "pending", "verified", "rejected"
+  verifiedData  String?  // JSON string of extracted information
+  user          User     @relation(fields: [userId], references: [id])
+  userId        Int
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Scheme {
+  id            Int       @id @default(autoincrement())
+  name          String
+  description   String
+  category      String    
+  ministry      String
+  eligibility   String    // JSON string of eligibility criteria
+  benefits      String
+  requiredDocs  SchemeDocument[]
+  applications  SchemeApplication[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model SchemeDocument {
+  id        Int      @id @default(autoincrement())
+  name      String
+  scheme    Scheme   @relation(fields: [schemeId], references: [id])
+  schemeId  Int
+}
+
+model SchemeApplication {
+  id        Int      @id @default(autoincrement())
+  status    String   // "pending", "approved", "rejected"
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  scheme    Scheme   @relation(fields: [schemeId], references: [id])
+  schemeId  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChatMessage {
+  id        Int      @id @default(autoincrement())
+  content   String
+  role      String   // "user" or "assistant"
+  user      User     @relation(fields: [userId], references: [id])
+  userId    Int
+  createdAt DateTime @default(now())
+}
+
