@@ -10,7 +10,6 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 //import { useToast } from '@/components/ui/use-toast'
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
 
 const questions = [
   {
@@ -112,7 +111,7 @@ export default function Questionnaire() {
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
-                {question.options?.map((option) => (
+                {question.options.map((option) => (
                   <SelectItem key={option} value={option}>
                     {option}
                   </SelectItem>
@@ -126,7 +125,7 @@ export default function Questionnaire() {
           <div className="space-y-2">
             <Label>{question.question}</Label>
             <RadioGroup onValueChange={handleAnswer} value={answers[question.id]}>
-              {question.options?.map((option) => (
+              {question.options.map((option) => (
                 <div key={option} className="flex items-center space-x-2">
                   <RadioGroupItem value={option} id={option} />
                   <Label htmlFor={option}>{option}</Label>
@@ -231,3 +230,4 @@ export default function Questionnaire() {
     </div>
   )
 }
+

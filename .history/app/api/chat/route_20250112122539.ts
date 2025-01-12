@@ -12,11 +12,11 @@ export async function POST(req: Request) {
       history: [
         {
           role: 'user',
-          parts: [{ text: 'You are an AI assistant for GovEase, a platform that helps citizens find and apply for government schemes in India. Provide helpful and accurate information about various Indian government schemes, their eligibility criteria, and application processes. Format your responses without using asterisks or bullet points.' }],
+          parts: 'You are an AI assistant for GovEase, a platform that helps citizens find and apply for government schemes in India. Provide helpful and accurate information about various Indian government schemes, their eligibility criteria, and application processes. Format your responses without using asterisks or bullet points.',
         },
         {
           role: 'model',
-          parts: [{ text: 'Understood. I am now an AI assistant for GovEase, specializing in Indian government schemes. I will provide information about schemes, eligibility criteria, and application processes without using asterisks or bullet points. How may I assist you today?' }],
+          parts: 'Understood. I am now an AI assistant for GovEase, specializing in Indian government schemes. I will provide information about schemes, eligibility criteria, and application processes without using asterisks or bullet points. How may I assist you today?',
         },
       ],
       generationConfig: {
@@ -46,3 +46,4 @@ export async function POST(req: Request) {
     )
   }
 }
+

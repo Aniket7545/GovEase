@@ -112,7 +112,7 @@ export default function Questionnaire() {
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
-                {question.options?.map((option) => (
+                {question.options.map((option) => (
                   <SelectItem key={option} value={option}>
                     {option}
                   </SelectItem>
@@ -126,7 +126,7 @@ export default function Questionnaire() {
           <div className="space-y-2">
             <Label>{question.question}</Label>
             <RadioGroup onValueChange={handleAnswer} value={answers[question.id]}>
-              {question.options?.map((option) => (
+              {question.options.map((option) => (
                 <div key={option} className="flex items-center space-x-2">
                   <RadioGroupItem value={option} id={option} />
                   <Label htmlFor={option}>{option}</Label>
@@ -231,3 +231,4 @@ export default function Questionnaire() {
     </div>
   )
 }
+

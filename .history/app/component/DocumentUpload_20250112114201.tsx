@@ -6,8 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
 import { Upload, CheckCircle, AlertTriangle, FileText, RefreshCw } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
-
+import { useToast } from '@/components/ui/use-toast'
 
 interface VerificationResult {
   status: string

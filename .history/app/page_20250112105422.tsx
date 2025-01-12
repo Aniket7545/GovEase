@@ -1,12 +1,10 @@
-'use client'
-
 import Link from 'next/link'
-import { motion } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronRight, BarChart2, FileText, MessageSquare, ArrowRight } from 'lucide-react'
 import SchemeCategories from './component/SchemeCategories'
-import { ChatWidget } from './component/ChatWidget'
+import { ChatWidget } from './components/ChatWidget'
+import { motion } from 'framer-motion'
 
 export default function Home() {
   return (

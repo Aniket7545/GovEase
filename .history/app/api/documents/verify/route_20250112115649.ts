@@ -30,11 +30,7 @@ export async function POST(req: Request) {
       .toBuffer()
 
     // Perform OCR
-    const worker = (await createWorker()) as Worker & {
-      loadLanguage: (language: string) => Promise<void>;
-      initialize: (language: string) => Promise<void>;
-    };
-   // const worker = await createWorker()
+    const worker = await createWorker()
     await worker.loadLanguage('eng')
     await worker.initialize('eng')
     

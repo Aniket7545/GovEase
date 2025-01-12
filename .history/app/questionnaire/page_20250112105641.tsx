@@ -8,7 +8,6 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-//import { useToast } from '@/components/ui/use-toast'
 import { Loader2, ChevronLeft, ChevronRight } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 
@@ -48,7 +47,7 @@ export default function Questionnaire() {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [answers, setAnswers] = useState<Record<string, string>>({})
   const [isLoading, setIsLoading] = useState(false)
-  const [recommendations, setRecommendations] = useState<any[]>([])
+  const [recommendations, setRecommendations] = useState<string[]>([])
   const { toast } = useToast()
 
   const handleAnswer = (answer: string) => {
@@ -104,7 +103,7 @@ export default function Questionnaire() {
           </div>
         )
       case 'select':
-        return (
+        return question.options ? (
           <div className="space-y-2">
             <Label>{question.question}</Label>
             <Select onValueChange={handleAnswer} value={answers[question.id]}>
@@ -112,7 +111,7 @@ export default function Questionnaire() {
                 <SelectValue placeholder="Select an option" />
               </SelectTrigger>
               <SelectContent>
-                {question.options?.map((option) => (
+                {question.options.map((option) => (
                   <SelectItem key={option} value={option}>
                     {option}
                   </SelectItem>
@@ -120,13 +119,13 @@ export default function Questionnaire() {
               </SelectContent>
             </Select>
           </div>
-        )
+        ) : null
       case 'radio':
-        return (
+        return question.options ? (
           <div className="space-y-2">
             <Label>{question.question}</Label>
             <RadioGroup onValueChange={handleAnswer} value={answers[question.id]}>
-              {question.options?.map((option) => (
+              {question.options.map((option) => (
                 <div key={option} className="flex items-center space-x-2">
                   <RadioGroupItem value={option} id={option} />
                   <Label htmlFor={option}>{option}</Label>
@@ -134,7 +133,7 @@ export default function Questionnaire() {
               ))}
             </RadioGroup>
           </div>
-        )
+        ) : null
       default:
         return null
     }
@@ -170,29 +169,20 @@ export default function Questionnaire() {
                 transition={{ duration: 0.3 }}
               >
                 {recommendations.length > 0 ? (
-                  <div className="space-y-6">
+                  <div className="space-y-4">
                     <h3 className="text-xl font-semibold text-blue-600">Recommended Schemes</h3>
-                    {recommendations.map((scheme, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.3, delay: index * 0.1 }}
-                      >
-                        <Card>
-                          <CardHeader>
-                            <CardTitle>{scheme.name}</CardTitle>
-                          </CardHeader>
-                          <CardContent>
-                            <p className="text-gray-600 mb-2">{scheme.description}</p>
-                            <h4 className="font-semibold mt-4 mb-2">Key Benefits:</h4>
-                            <p className="text-gray-600">{scheme.benefits}</p>
-                            <h4 className="font-semibold mt-4 mb-2">Eligibility:</h4>
-                            <p className="text-gray-600">{scheme.eligibility}</p>
-                          </CardContent>
-                        </Card>
-                      </motion.div>
-                    ))}
+                    <ul className="list-disc pl-5 space-y-2">
+                      {recommendations.map((scheme, index) => (
+                        <motion.li
+                          key={index}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: index * 0.1 }}
+                        >
+                          {scheme}
+                        </motion.li>
+                      ))}
+                    </ul>
                   </div>
                 ) : (
                   renderQuestion()

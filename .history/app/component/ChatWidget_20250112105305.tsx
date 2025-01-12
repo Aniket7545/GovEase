@@ -65,10 +65,10 @@ export function ChatWidget() {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-4 right-4 z-50"
+            className="fixed bottom-4 right-4"
           >
             <Button
-              className="rounded-full p-4 bg-blue-600 hover:bg-blue-700 text-white shadow-lg"
+              className="rounded-full p-4 bg-blue-600 hover:bg-blue-700 text-white"
               onClick={() => setIsOpen(true)}
             >
               <MessageCircle className="h-6 w-6" />
@@ -83,16 +83,16 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className="fixed bottom-4 right-4 w-96 h-[600px] z-50"
+            className="fixed bottom-4 right-4 w-80 h-96"
           >
-            <Card className="h-full flex flex-col shadow-xl border-2 border-blue-200">
-              <div className="flex justify-between items-center p-4 border-b bg-gradient-to-r from-blue-600 to-blue-400 text-white">
-                <h3 className="font-semibold text-lg">GovEase Chat Assistant</h3>
+            <Card className="h-full flex flex-col">
+              <div className="flex justify-between items-center p-3 border-b bg-blue-600 text-white">
+                <h3 className="font-semibold">GovEase Chat</h3>
                 <Button variant="ghost" size="icon" onClick={() => setIsOpen(false)} className="text-white hover:text-blue-200">
-                  <X className="h-5 w-5" />
+                  <X className="h-4 w-4" />
                 </Button>
               </div>
-              <ScrollArea className="flex-grow p-4 bg-gray-50" ref={scrollAreaRef}>
+              <ScrollArea ref={scrollAreaRef} className="flex-grow p-3">
                 {messages.map((message, index) => (
                   <motion.div
                     key={index}
@@ -104,41 +104,17 @@ export function ChatWidget() {
                     }`}
                   >
                     {message.role === 'assistant' && (
-                      <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                        <Bot className="w-5 h-5 text-blue-600" />
-                      </div>
+                      <Bot className="w-6 h-6 mt-1 text-blue-600" />
                     )}
-                    <div className={`p-3 rounded-lg max-w-[80%] ${
-                      message.role === 'user' ? 'bg-blue-600 text-white' : 'bg-white shadow-md'
+                    <div className={`p-2 rounded-lg max-w-[80%] ${
+                      message.role === 'user' ? 'bg-blue-600 text-white' : 'bg-gray-100'
                     }`}>
-                      <p className="text-sm leading-relaxed whitespace-pre-wrap">{message.content}</p>
+                      <p className="text-sm">{message.content}</p>
                     </div>
-                    {message.role === 'user' && (
-                      <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
-                        <User className="w-5 h-5 text-gray-600" />
-                      </div>
-                    )}
                   </motion.div>
                 ))}
-                {isLoading && (
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
-                      <Bot className="w-5 h-5 text-blue-600" />
-                    </div>
-                    <div className="bg-white p-3 rounded-lg shadow-md">
-                      <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
-                        className="text-blue-600"
-                      >
-                        Typing...
-                      </motion.div>
-                    </div>
-                  </div>
-                )}
               </ScrollArea>
-              <CardContent className="border-t p-4 bg-white">
+              <CardContent className="border-t p-3">
                 <form onSubmit={handleSubmit} className="flex space-x-2">
                   <Input
                     value={input}
@@ -146,7 +122,7 @@ export function ChatWidget() {
                     placeholder="Type your message..."
                     className="flex-grow"
                   />
-                  <Button type="submit" size="icon" disabled={isLoading} className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button type="submit" size="icon" disabled={isLoading}>
                     <Send className="h-4 w-4" />
                   </Button>
                 </form>

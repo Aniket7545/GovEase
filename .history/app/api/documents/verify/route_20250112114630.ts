@@ -1,9 +1,7 @@
 import { NextResponse } from 'next/server'
-import { createWorker,Worker } from 'tesseract.js'
+import { createWorker } from 'tesseract.js'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import sharp from 'sharp'
-
-
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
@@ -30,16 +28,13 @@ export async function POST(req: Request) {
       .toBuffer()
 
     // Perform OCR
-    const worker = (await createWorker()) as Worker & {
-      loadLanguage: (language: string) => Promise<void>;
-      initialize: (language: string) => Promise<void>;
-    };
-   // const worker = await createWorker()
-    await worker.loadLanguage('eng')
-    await worker.initialize('eng')
-    
+    const worker = await createWorker()
+    await worker.load() // Load the worker engine
+    await worker.loadLanguage('eng') // Load the English language
+    await worker.initialize('eng') // Initialize the worker with the 'eng' language
+
     const { data: { text } } = await worker.recognize(processedBuffer)
-    await worker.terminate()
+    await worker.terminate() // Terminate the worker after recognition
 
     // Use Gemini to analyze the extracted text
     const model = genAI.getGenerativeModel({ model: 'gemini-pro' })
@@ -81,4 +76,3 @@ export async function POST(req: Request) {
     )
   }
 }
-

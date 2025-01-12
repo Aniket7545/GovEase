@@ -3,8 +3,6 @@ import { createWorker,Worker } from 'tesseract.js'
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import sharp from 'sharp'
 
-
-
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '')
 
 export async function POST(req: Request) {
@@ -30,11 +28,7 @@ export async function POST(req: Request) {
       .toBuffer()
 
     // Perform OCR
-    const worker = (await createWorker()) as Worker & {
-      loadLanguage: (language: string) => Promise<void>;
-      initialize: (language: string) => Promise<void>;
-    };
-   // const worker = await createWorker()
+    const worker = await createWorker()
     await worker.loadLanguage('eng')
     await worker.initialize('eng')
     
