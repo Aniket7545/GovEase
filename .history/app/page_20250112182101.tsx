@@ -64,7 +64,6 @@ export default function Home() {
 
           {/* Features Section */}
           {/* Features Section */}
-{/* Features Section */}
 <motion.div variants={itemVariants}>
   <div className="grid md:grid-cols-3 gap-8">
     {[
@@ -101,24 +100,19 @@ export default function Home() {
           onClick={feature.onClick}
           className="block h-full"
         >
-          <Card className="relative h-full overflow-hidden border bg-white dark:bg-gray-800 shadow-md hover:shadow-xl transition-all duration-300">
-            <CardHeader className="pb-4">
-              <CardTitle className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-blue-50 dark:bg-blue-900/50">
-                  <div className="text-blue-600 dark:text-blue-400">
-                    {feature.icon}
-                  </div>
-                </div>
-                <span className="text-gray-800 dark:text-gray-100">
-                  {feature.title}
-                </span>
+          <Card className="relative h-full overflow-hidden border-none bg-white/70 dark:bg-gray-800/50 backdrop-blur-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 opacity-50" />
+            <CardHeader>
+              <CardTitle className="flex items-center gap-3 text-blue-600 dark:text-blue-400">
+                {feature.icon}
+                {feature.title}
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-gray-600 dark:text-gray-300">
                 {feature.description}
               </p>
-              <span className="group text-blue-600 dark:text-blue-400 flex items-center font-medium">
+              <span className="group text-blue-600 dark:text-blue-400 flex items-center">
                 {feature.linkText}
                 <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
               </span>
